@@ -3,6 +3,7 @@ import Voter from "../models/voterModel";
 import CatchAsync from "../error/CatchAsync";
 import { IVoter } from "../types/types";
 
+//register controller
 const dob = new Date("1999-12-31");
 const register = CatchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
