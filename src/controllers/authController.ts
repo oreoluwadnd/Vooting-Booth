@@ -16,4 +16,3 @@ const register = CatchAsync(
     });
   }
 );
-git commit --date "Sat Mar 11 14:00 2023 +0100"
