@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { IVoter } from "../types/types";
 
 const router: Router = Router();
 
