@@ -23,8 +23,8 @@ const voterSchema: Schema = new Schema({
   role: {
     type: String,
     required: true,
-    enum: ["admin", "voter"],
-    default: "voter",
+    enum: ["ADMIN", "VOTER"],
+    default: "VOTER",
   },
   phone: {
     type: String,
