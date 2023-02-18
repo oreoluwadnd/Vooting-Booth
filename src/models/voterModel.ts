@@ -13,11 +13,12 @@ const voterSchema: Schema = new Schema({
     required: [true, "A user must have an email"],
     unique: true,
     lowercase: true,
-    validate: [validator.isEmail, "invalid email"],
+    validate: [validator.isEmail, "Invalid email"],
   },
   password: {
     type: String,
     minlength: 8,
+
     required: [true, "A user must have a password"],
   },
   role: {
