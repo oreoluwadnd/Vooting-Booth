@@ -3,10 +3,6 @@ import Voter from "../models/voterModel";
 import CatchAsync from "../error/CatchAsync";
 import { IVoter } from "../types/types";
 
-// @Desc Register user
-// @Route /api/users/register
-// @Method POST
-
 const dob = new Date("1999-12-31");
 const register = CatchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
