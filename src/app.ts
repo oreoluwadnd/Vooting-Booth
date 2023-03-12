@@ -3,14 +3,16 @@ import helmet from "helmet";
 import { rateLimit } from "express-rate-limit";
 import mongoSanitize from "express-mongo-sanitize";
 import morganMiddleware from "./middleware/morgan";
-
 import { errorHandler } from "./error/ErrorHandler";
 import { AppError, HttpCode } from "./error/AppError";
+import votersRoutes from "./routes/votersRoutes";
+import config from "./config/config";
 // No type defintions available for package 'xss-clean'
 // @ts-ignore
 import xss from "xss-clean";
 import cors from "cors";
 import "dotenv/config";
+import Logger from "./logger/logger";
 const app: Express = express();
 app.enable("trust proxy");
 app.use(express.json());
@@ -44,11 +46,16 @@ app.use(
   })
 );
 
-app.get("/", (req: Request, res: Response, next: NextFunction) => {
+const apiVersion = config.API_VERSION;
+const apiPrefix = config.API_PREFIX;
+const apiRoute = `${apiPrefix}/${apiVersion}`;
+
+app.use(`${apiRoute}/voters`, votersRoutes);
+
+app.all("*", (req: Request, res: Response, next: NextFunction) => {
   throw new AppError({
-    httpCode: HttpCode.INTERNAL_SERVER_ERROR,
-    message: "GEt OUT",
-    isOperational: false,
+    httpCode: HttpCode.NOT_FOUND,
+    message: `Cant find ${req.originalUrl} on this server !`,
   });
 });
 

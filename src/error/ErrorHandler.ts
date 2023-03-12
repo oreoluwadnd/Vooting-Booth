@@ -24,7 +24,7 @@ class ErrorHandler {
       status: error.status,
       statusCode: error.httpCode,
       message: error.message,
-      // stack: error.stack,
+      stack: error.stack,
     });
   }
 
@@ -39,14 +39,22 @@ class ErrorHandler {
   }
 
   private handleTrustedError(error: AppError, res: Response): void {
-    if (process.env.NODE_ENV === "development") {
-      this.sendDevError(error, res);
-    } else if (process.env.NODE_ENV === "production") {
-      this.sendProductionError(error, res);
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   this.sendDevError(error, res);
+    // } else if (process.env.NODE_ENV === "production") {
+    //   this.sendProductionError(error, res);
+    // }
+    Logger.error("ERROR", error);
+    res.status(error.httpCode).json({
+      status: error.status,
+      statusCode: error.httpCode,
+      message: error.message,
+      stack: error.stack,
+    });
   }
   private handleCriticalError(error: Error, res?: Response): void {
     if (res) {
+      Logger.info("💥 Application encountered an unknown error.");
       res.status(HttpCode.INTERNAL_SERVER_ERROR).json({
         status: "Error",
         message: error.message,
@@ -58,4 +66,5 @@ class ErrorHandler {
     }
   }
 }
+
 export const errorHandler = new ErrorHandler();

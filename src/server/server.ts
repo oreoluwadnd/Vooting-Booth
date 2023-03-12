@@ -1,19 +1,19 @@
 import app from "../app";
 import mongoose from "mongoose";
 import Logger from "../logger/logger";
-import { errorHandler } from "../error/ErrorHandler";
 import { createHttpTerminator } from "http-terminator";
 import "dotenv/config";
-
+import { exitHandler } from "./serverExit";
+import config from "../config/config";
+console.log(config);
 const port: number | string = process.env.PORT || 3000;
-const uri: string = process.env.DATABASE || "";
+const uri: string = config.DATABASE || "";
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   dbName: "Voting-Booth",
 };
 mongoose.set("strictQuery", true);
-
 mongoose
   .connect(uri, options)
   .then(() => Logger.info("🚀 Database connected successfully "))
@@ -42,23 +42,30 @@ mongoose
     } else {
       Logger.error("Error while connecting to mongo database", err);
     }
-    errorHandler.handleError(err);
+    throw new Error(err.message || err);
   });
-
 export const server = app.listen(port, () => {
   Logger.info(` Server is running on port ${port} 🔌`);
 });
 export const httpTerminator = createHttpTerminator({
   server,
 });
-process.on("uncaughtException", (error: Error) => {
+
+process.on("unhandledRejection", (error: Error | any) => {
   Logger.error(`Uncaught Exception: ${error.message}`);
 
-  errorHandler.handleError(error);
+  throw new Error(error.message || error);
 });
-
-process.on("unhandledRejection", (error: Error) => {
-  Logger.error(`unhandled Rejection : ${error.message}`);
-
-  errorHandler.handleError(error);
+process.on("uncaughtException", (error: Error | any) => {
+  Logger.error(`Uncaught Exception: ${error.message}`);
+  Logger.error(`Process ${process.pid} `);
+  exitHandler.handleExit(1);
+});
+process.on("SIGTERM", () => {
+  Logger.error(`Process ${process.pid} received SIGTERM: Exiting with code 0`);
+  exitHandler.handleExit(0);
+});
+process.on("SIGINT", () => {
+  Logger.error(`Process ${process.pid} received SIGINT: Exiting with code 0`);
+  exitHandler.handleExit(0);
 });
