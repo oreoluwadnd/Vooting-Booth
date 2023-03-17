@@ -16,7 +16,8 @@ const electionSchema: Schema = new Schema({
     required: true,
   },
   type: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "ElectionType",
     required: true,
   },
   end: {
@@ -25,7 +26,7 @@ const electionSchema: Schema = new Schema({
   },
   created: {
     type: Date,
-    required: true,
+    default: Date.now(),
   },
   candidate: {
     type: Schema.Types.ObjectId,

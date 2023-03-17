@@ -52,3 +52,32 @@ export const register = CatchAsync(
     });
   }
 );
+
+//Login
+export const login = CatchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      throw new AppError({
+        httpCode: HttpCode.BAD_REQUEST,
+        message: `Pls provide email and password`,
+      });
+    }
+    const voter = await Voter.findOne({ email }).select("+password");
+    if (
+      !voter ||
+      !(await Voter.schema.methods.correctPassword(password, voter.password))
+    ) {
+      throw new AppError({
+        httpCode: HttpCode.UNAUTHORIZED,
+        message: `Incorrect email or password`,
+      });
+    }
+    const result = await createToken(res, req, voter);
+    res.status(HttpCode.CREATED).json({
+      status: result.status,
+      Voter: result.newVoter,
+      token: result.token,
+    });
+  }
+);

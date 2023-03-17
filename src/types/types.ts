@@ -14,7 +14,7 @@ export interface IVoter extends Document {
 export interface ICandidate extends Document {
   name: string;
   party: string;
-  campaign: string;
+  manifesto: string;
   biography: boolean;
   image: string;
   status: boolean;
@@ -22,12 +22,12 @@ export interface ICandidate extends Document {
 
 export interface IElection extends Document {
   name: string;
-  type: string;
+  type: Types.ObjectId;
   status: boolean;
   start: Date;
   end: Date;
   created: Date;
-  candidates: Types.ObjectId;
+  candidate: Types.ObjectId;
   voters: Array<Types.ObjectId>;
   totalVotes: number;
 }

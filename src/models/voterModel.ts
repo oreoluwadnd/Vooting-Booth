@@ -1,9 +1,15 @@
-import { Schema, model } from "mongoose";
+import { Model, Schema, model } from "mongoose";
 import { IVoter } from "../types/types";
 import bcrypt from "bcryptjs";
 import validator from "validator";
 
-const voterSchema: Schema = new Schema({
+interface IVoterMethods {
+  correctPassword(candidatePassword: string, userPassword: string): boolean;
+}
+
+type voterModel = Model<IVoter, {}, IVoterMethods>;
+
+const voterSchema: Schema = new Schema<IVoter, voterModel, IVoterMethods>({
   name: {
     type: String,
     required: [true, "A user must have a name"],
@@ -18,7 +24,6 @@ const voterSchema: Schema = new Schema({
   password: {
     type: String,
     minlength: 8,
-
     required: [true, "A user must have a password"],
   },
   role: {
@@ -43,4 +48,10 @@ voterSchema.pre("save", async function (this: IVoter, next) {
   next();
 });
 
-export default model<IVoter>("Voter", voterSchema);
+voterSchema.method(
+  "correctPassword",
+  async function (this: any, candidatePassword: string, userPassword: string) {
+    return await bcrypt.compare(candidatePassword, userPassword);
+  }
+);
+export default model<IVoter, voterModel>("Voter", voterSchema);

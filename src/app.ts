@@ -6,6 +6,7 @@ import morganMiddleware from "./middleware/morgan";
 import { errorHandler } from "./error/ErrorHandler";
 import { AppError, HttpCode } from "./error/AppError";
 import votersRoutes from "./routes/votersRoutes";
+import candidatesRoutes from "./routes/candidatesRoutes";
 import config from "./config/config";
 // No type defintions available for package 'xss-clean'
 // @ts-ignore
@@ -51,6 +52,7 @@ const apiPrefix = config.API_PREFIX;
 const apiRoute = `${apiPrefix}/${apiVersion}`;
 
 app.use(`${apiRoute}/voters`, votersRoutes);
+app.use(`${apiRoute}/candidates`, candidatesRoutes);
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   throw new AppError({

@@ -10,21 +10,21 @@ const candidateSchema: Schema = new Schema({
     type: String,
     required: [true, "A candidate must have a party"],
   },
-  campaign: {
+  manifesto: {
     type: String,
-    required: true,
+    required: [true, "A candidate must have a campaign"],
   },
   biography: {
     type: String,
-    required: true,
+    required: [true, "A candidate must have a biography"],
   },
   image: {
     type: String,
-    required: true,
   },
   status: {
     type: Boolean,
     required: true,
+    default: false,
   },
 });
 
