@@ -7,6 +7,7 @@ import { errorHandler } from "./error/ErrorHandler";
 import { AppError, HttpCode } from "./error/AppError";
 import votersRoutes from "./routes/votersRoutes";
 import candidatesRoutes from "./routes/candidatesRoutes";
+import electionRoutes from "./routes/ElectionRoutes";
 import config from "./config/config";
 // No type defintions available for package 'xss-clean'
 // @ts-ignore
@@ -53,6 +54,8 @@ const apiRoute = `${apiPrefix}/${apiVersion}`;
 
 app.use(`${apiRoute}/voters`, votersRoutes);
 app.use(`${apiRoute}/candidates`, candidatesRoutes);
+app.use(`${apiRoute}/elections`, electionRoutes);
+app.use();
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   throw new AppError({

@@ -6,7 +6,7 @@ import { IElection } from "../types/types";
 
 //@ create election
 export const createElection = CatchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const { name, start, end, type, candidate } = req.body;
     const election = await Election.create({
       name,
@@ -24,7 +24,7 @@ export const createElection = CatchAsync(
 
 //@ get all elections
 export const getAllElections = CatchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const elections = await Election.find();
     res.status(HttpCode.OK).json({
       status: "success",
@@ -35,7 +35,7 @@ export const getAllElections = CatchAsync(
 
 //@ get election by id
 export const getElectionById = CatchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const election = await Election.findById(req.params.id);
     if (!election) {
       throw new AppError({
@@ -52,7 +52,7 @@ export const getElectionById = CatchAsync(
 
 //@ update election by id
 export const updateElectionById = CatchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const election = await Election.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
@@ -72,7 +72,7 @@ export const updateElectionById = CatchAsync(
 
 //@ delete election by id
 export const deleteElectionById = CatchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const { id } = req.params;
     const election = await Election.findByIdAndDelete(id);
     if (!election) {
