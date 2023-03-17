@@ -34,7 +34,7 @@ const voterSchema: Schema = new Schema({
   },
   status: { type: Boolean, required: true, default: false },
   dob: { type: Date, required: true },
-  created: { type: Date, required: true, default: Date.now },
+  created: { type: Date, default: Date.now },
 });
 
 voterSchema.pre("save", async function (this: IVoter, next) {

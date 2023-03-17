@@ -1,10 +1,8 @@
 import { Router } from "express";
-import { IVoter } from "../types/types";
+import { setAdmin, checkEmail, register } from "../controllers/authController";
 
 const router: Router = Router();
 
-router.get("/", (req, res) => {
-  res.send("Hello");
-});
+router.post("/register", setAdmin, checkEmail, register);
 
 export default router;

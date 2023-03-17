@@ -58,6 +58,7 @@ class ErrorHandler {
       res.status(HttpCode.INTERNAL_SERVER_ERROR).json({
         status: "Error",
         message: error.message,
+        stack: error.stack,
       });
 
       Logger.info("💥 Application encountered an unknown error.");

@@ -5,8 +5,8 @@ export enum HttpCode {
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
   INTERNAL_SERVER_ERROR = 500,
+  CREATED = 201,
 }
-
 interface AppErrorArgs {
   status?: string;
   httpCode: HttpCode;

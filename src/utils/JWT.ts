@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import "dotenv/config";
 import jwt from "jsonwebtoken";
 import config from "../config/config";
+import Logger from "../logger/logger";
 
 // @Desc sign JWT
 
@@ -12,7 +13,7 @@ const signJWT = (id: string): string | undefined => {
 };
 
 // @Desc Verify JWT
-exports.verifyToken = (token: string) => {
+export const verifyToken = (token: string) => {
   try {
     return jwt.verify(token, config.JWT_SECRET);
   } catch (err) {
@@ -21,13 +22,20 @@ exports.verifyToken = (token: string) => {
 };
 
 // @ Create and send token
-exports.createToken = (res: Response, req: Request, voter: any) => {
+export const createToken = (res: Response, req: Request, voter: any) => {
   const token = signJWT(voter._id);
-  const expires: unknown = config.JWT_EXPIRES_IN;
+  const expires: unknown = config.JWT_COOKIE_EXPIRES_IN;
   res.cookie("jwt", token, {
     expires: new Date(Date.now() + (expires as number) * 24 * 60 * 60 * 1000),
     httpOnly: true,
     secure: req.secure || req.headers["x-forwarded-proto"] === "https",
   });
   voter.password = undefined;
+  Logger.info("🔐 Token created successfully");
+  return {
+    res,
+    status: "success",
+    newVoter: voter,
+    token,
+  };
 };
