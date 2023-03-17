@@ -55,7 +55,7 @@ const apiRoute = `${apiPrefix}/${apiVersion}`;
 app.use(`${apiRoute}/voters`, votersRoutes);
 app.use(`${apiRoute}/candidates`, candidatesRoutes);
 app.use(`${apiRoute}/elections`, electionRoutes);
-app.use();
+// app.use();
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   throw new AppError({
