@@ -5,6 +5,7 @@ import mongoSanitize from "express-mongo-sanitize";
 import morganMiddleware from "./middleware/morgan";
 import { errorHandler } from "./error/ErrorHandler";
 import { AppError, HttpCode } from "./error/AppError";
+import voteRoutes from "./routes/voteRoutes";
 import votersRoutes from "./routes/votersRoutes";
 import candidatesRoutes from "./routes/candidatesRoutes";
 import electionRoutes from "./routes/ElectionRoutes";
@@ -55,6 +56,7 @@ const apiRoute = `${apiPrefix}/${apiVersion}`;
 app.use(`${apiRoute}/voters`, votersRoutes);
 app.use(`${apiRoute}/candidates`, candidatesRoutes);
 app.use(`${apiRoute}/elections`, electionRoutes);
+app.use(`${apiRoute}/vote`, voteRoutes);
 // app.use();
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
