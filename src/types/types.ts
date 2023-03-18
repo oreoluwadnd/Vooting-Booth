@@ -8,14 +8,16 @@ export interface IVoter extends Document {
   status: boolean;
   role: string;
   dob: Date;
+  voted: Array<Types.ObjectId>;
+  fingerPrint: string;
   created: Date;
 }
 
 export interface ICandidate extends Document {
   name: string;
   party: string;
-  manifesto: string;
-  biography: boolean;
+  campaign: string;
+  biography: string;
   image: string;
   status: boolean;
 }
@@ -23,7 +25,6 @@ export interface ICandidate extends Document {
 export interface IElection extends Document {
   name: string;
   type: Types.ObjectId;
-  status: boolean;
   start: Date;
   end: Date;
   created: Date;
