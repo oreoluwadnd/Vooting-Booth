@@ -5,6 +5,8 @@ import validator from "validator";
 
 interface IVoterMethods {
   correctPassword(candidatePassword: string, userPassword: string): boolean;
+  verifyFingerPrint(fingerPrint: string, voterPrint: string): boolean;
+  checkVoted(electionId: string, votedParticipated: string): boolean;
 }
 
 type voterModel = Model<IVoter, {}, IVoterMethods>;
@@ -21,6 +23,12 @@ const voterSchema: Schema = new Schema<IVoter, voterModel, IVoterMethods>({
     lowercase: true,
     validate: [validator.isEmail, "Invalid email"],
   },
+  voted: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "ElectionType",
+    },
+  ],
   password: {
     type: String,
     minlength: 8,
@@ -31,6 +39,10 @@ const voterSchema: Schema = new Schema<IVoter, voterModel, IVoterMethods>({
     required: true,
     enum: ["ADMIN", "VOTER"],
     default: "VOTER",
+  },
+  fingerPrint: {
+    type: String,
+    required: true,
   },
   phone: {
     type: String,
@@ -54,4 +66,21 @@ voterSchema.method(
     return await bcrypt.compare(candidatePassword, userPassword);
   }
 );
+
+voterSchema.method(
+  "verifyFingerPrint",
+  async function (this: any, fingerPrint: string, voterPrint: string) {
+    if (fingerPrint === voterPrint) {
+      return true;
+    } else return false;
+  }
+);
+// voterSchema.method(
+//   "checkVoted",
+//   async function (this: any, electionId: string, votedParticipated: string) {
+//     if (electionId === votedParticipated) {
+//       return true;
+//     } else return false;
+//   }
+// );
 export default model<IVoter, voterModel>("Voter", voterSchema);
