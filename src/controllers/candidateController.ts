@@ -11,7 +11,7 @@ import Logger from "../logger/logger";
 export const createCandidate = CatchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { name, party, campaign, biography, image, status } = req.body;
-    if (!name || !party || !campaign || !biography || !image || !status) {
+    if (!name || !party || !campaign || !biography || !image) {
       throw new AppError({
         httpCode: HttpCode.BAD_REQUEST,
         message: `Please fill all fields`,
@@ -48,7 +48,8 @@ export const getAllCandidates = CatchAsync(
 // @route   GET /api/v1/candidate/:id
 export const getCandidate = CatchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const candidate = await Candidate.findById(req.params.id);
+    const { id } = req.params;
+    const candidate = await Candidate.findById(id);
     if (!candidate) {
       throw new AppError({
         httpCode: HttpCode.NOT_FOUND,
@@ -84,14 +85,11 @@ export const deleteCandidate = CatchAsync(
 //@route    PUT /api/v1/candidate/:id
 export const updateCandidate = CatchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const candidate = await Candidate.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    const { id } = req.params;
+    const candidate = await Candidate.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
     if (!candidate) {
       throw new AppError({
         httpCode: HttpCode.NOT_FOUND,
