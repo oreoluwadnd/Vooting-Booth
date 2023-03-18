@@ -5,7 +5,6 @@ import { createHttpTerminator } from "http-terminator";
 import "dotenv/config";
 import { exitHandler } from "./serverExit";
 import config from "../config/config";
-console.log(config);
 const port: number | string = process.env.PORT || 3000;
 const uri: string = config.DATABASE || "";
 const options = {
