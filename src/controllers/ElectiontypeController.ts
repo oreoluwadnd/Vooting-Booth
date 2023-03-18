@@ -15,7 +15,6 @@ export const createElectionType = CatchAsync(
     });
   }
 );
-
 //@ delete election type
 export const deleteElectionType = CatchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -33,7 +32,6 @@ export const deleteElectionType = CatchAsync(
     });
   }
 );
-
 //@ get all election types
 export const getAllElectionTypes = CatchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
