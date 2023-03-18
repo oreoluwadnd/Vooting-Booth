@@ -3,6 +3,7 @@ import CatchAsync from "../error/CatchAsync";
 import { AppError, HttpCode } from "../error/AppError";
 import Election from "../models/election";
 import { IElection } from "../types/types";
+import Logger from "../logger/logger";
 
 //@ create election
 export const createElection = CatchAsync(
@@ -32,11 +33,12 @@ export const getAllElections = CatchAsync(
     });
   }
 );
-
 //@ get election by id
 export const getElectionById = CatchAsync(
   async (req: Request, res: Response) => {
-    const election = await Election.findById(req.params.id);
+    const election = await Election.findById(req.params.id)
+      .populate("candidate")
+      .populate("voters");
     if (!election) {
       throw new AppError({
         httpCode: HttpCode.NOT_FOUND,
@@ -49,7 +51,6 @@ export const getElectionById = CatchAsync(
     });
   }
 );
-
 //@ update election by id
 export const updateElectionById = CatchAsync(
   async (req: Request, res: Response) => {
