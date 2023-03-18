@@ -6,14 +6,10 @@ const electionSchema: Schema = new Schema({
     type: String,
     required: [true, "An election must have a name"],
   },
-  status: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
   start: {
     type: Date,
     required: true,
+    default: Date.now(),
   },
   type: {
     type: Schema.Types.ObjectId,
@@ -23,6 +19,7 @@ const electionSchema: Schema = new Schema({
   end: {
     type: Date,
     required: true,
+    default: Date.now(),
   },
   created: {
     type: Date,
@@ -37,12 +34,11 @@ const electionSchema: Schema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Voter",
-      required: true,
     },
   ],
   totalVotes: {
     type: Number,
-    required: true,
+    default: 0,
   },
 });
 
