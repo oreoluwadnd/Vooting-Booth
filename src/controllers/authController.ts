@@ -34,7 +34,8 @@ export const setAdmin = CatchAsync(
 const dob = new Date("1999-12-31");
 export const register = CatchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { name, email, password, phone, role, status } = req.body;
+    const { name, email, password, phone, role, status, fingerPrint } =
+      req.body;
     const newVoter: IVoter = await Voter.create({
       name,
       email,
@@ -43,6 +44,7 @@ export const register = CatchAsync(
       dob,
       role,
       status,
+      fingerPrint,
     });
     const result = await createToken(res, req, newVoter);
     res.status(HttpCode.CREATED).json({
