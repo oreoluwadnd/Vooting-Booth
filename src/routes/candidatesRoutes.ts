@@ -12,7 +12,7 @@ const router: Router = Router();
 router.post("/createCandidate", createCandidate);
 router.get("/getAllCandidates", getAllCandidates);
 router.get("/getCandidate/:id", getCandidate);
-router.get("/deleteCandidate", deleteCandidate);
-router.get("/updateCandidate/:id", updateCandidate);
+router.delete("/deleteCandidate/:id", deleteCandidate);
+router.patch("/updateCandidate/:id", updateCandidate);
 
 export default router;
