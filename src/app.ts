@@ -52,12 +52,10 @@ app.use(
 const apiVersion = config.API_VERSION;
 const apiPrefix = config.API_PREFIX;
 const apiRoute = `${apiPrefix}/${apiVersion}`;
-
 app.use(`${apiRoute}/voters`, votersRoutes);
 app.use(`${apiRoute}/candidates`, candidatesRoutes);
 app.use(`${apiRoute}/elections`, electionRoutes);
 app.use(`${apiRoute}/vote`, voteRoutes);
-// app.use();
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   throw new AppError({
@@ -69,5 +67,4 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   errorHandler.handleError(err, res);
 });
-
 export default app;
