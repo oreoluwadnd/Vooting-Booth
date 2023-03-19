@@ -49,7 +49,7 @@ export const deleteVOter = CatchAsync(
     }
     res.status(HttpCode.OK).json({
       status: "success",
-      data: null,
+      data: voter,
     });
   }
 );
