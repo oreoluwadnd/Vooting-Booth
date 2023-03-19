@@ -21,7 +21,8 @@ export const getAllVoters = CatchAsync(
 //GET VOTER BY ID
 export const getVoter = CatchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const voter = await Voter.findById(req.params.id);
+    const { id } = req.params;
+    const voter = await Voter.findById(id);
     if (!voter) {
       throw new AppError({
         httpCode: HttpCode.NOT_FOUND,
@@ -40,7 +41,8 @@ export const getVoter = CatchAsync(
 //delete voter
 export const deleteVoter = CatchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const voter = await Voter.findByIdAndDelete(req.params.id);
+    const { id } = req.params;
+    const voter = await Voter.findByIdAndDelete(id);
     if (!voter) {
       throw new AppError({
         httpCode: HttpCode.NOT_FOUND,
@@ -73,5 +75,3 @@ export const updateVoter = CatchAsync(
     });
   }
 );
-
-// src/routes/votersRoutes.ts
