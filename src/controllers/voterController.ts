@@ -38,7 +38,7 @@ export const getVoter = CatchAsync(
 );
 
 //delete voter
-export const deleteVOter = CatchAsync(
+export const deleteVoter = CatchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const voter = await Voter.findByIdAndDelete(req.params.id);
     if (!voter) {
