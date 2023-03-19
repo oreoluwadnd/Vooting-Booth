@@ -69,7 +69,7 @@ export const updateVoter = CatchAsync(
     }
     res.status(HttpCode.OK).json({
       status: "success",
-      data: voter,
+      data: updatedVoter,
     });
   }
 );
