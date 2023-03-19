@@ -61,7 +61,7 @@ export const updateVoter = CatchAsync(
     const updatedVoter = await Voter.findByIdAndUpdate(id, req.body, {
       new: true,
     });
-    if (!voter) {
+    if (!updatedVoter) {
       throw new AppError({
         httpCode: HttpCode.NOT_FOUND,
         message: "No Voter With that Id found",
