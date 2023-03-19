@@ -44,7 +44,7 @@ export const deleteVOter = CatchAsync(
     if (!voter) {
       throw new AppError({
         httpCode: HttpCode.NOT_FOUND,
-        message: "No Voter With thaT Id found",
+        message: "No Voter With that Id found",
       });
     }
     res.status(HttpCode.OK).json({
@@ -61,5 +61,11 @@ export const updateVoter = CatchAsync(
     const updatedVoter = await Voter.findByIdAndUpdate(id, req.body, {
       new: true,
     });
+    if (!voter) {
+      throw new AppError({
+        httpCode: HttpCode.NOT_FOUND,
+        message: "No Voter With that Id found",
+      });
+    }
   }
 );
