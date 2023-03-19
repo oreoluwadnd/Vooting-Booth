@@ -36,3 +36,20 @@ export const getVoter = CatchAsync(
     });
   }
 );
+
+//delete voter
+export const deleteVOter = CatchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const voter = await Voter.findByIdAndDelete(req.params.id);
+    if (!voter) {
+      throw new AppError({
+        httpCode: HttpCode.NOT_FOUND,
+        message: "No Voter With thaT Id found",
+      });
+    }
+    res.status(HttpCode.OK).json({
+      status: "success",
+      data: null,
+    });
+  }
+);
