@@ -74,4 +74,4 @@ export const updateVoter = CatchAsync(
   }
 );
 
-//
+// src/routes/votersRoutes.ts
