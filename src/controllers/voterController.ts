@@ -53,3 +53,13 @@ export const deleteVOter = CatchAsync(
     });
   }
 );
+
+//update voter
+export const updateVoter = CatchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const updatedVoter = await Voter.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+  }
+);
