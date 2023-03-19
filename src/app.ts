@@ -68,4 +68,3 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   errorHandler.handleError(err, res);
 });
 export default app;
-//
