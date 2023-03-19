@@ -56,7 +56,7 @@ export const deleteVoter = CatchAsync(
   }
 );
 
-//update voterS
+//update voters
 export const updateVoter = CatchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
