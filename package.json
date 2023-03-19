@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "prod": "pm2 start dist/server/server.js",
+    "prod": "NODE_ENV=production pm2 start dist/server/server.js",
     "test": "jest --detectOpenHandles",
+    "pm2": "pm2 start dist/server/server.js",
     "dev": "concurrently \"tsc -w\" \" nodemon dist/server/server.js\""
   },
   "author": "",
