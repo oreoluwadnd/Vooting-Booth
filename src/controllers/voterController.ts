@@ -23,9 +23,10 @@ export const getVoter = CatchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const voter = await Voter.findById(req.params.id);
     if (!voter) {
-      return next(
-        new AppError("No voter found with that ID", HttpCode.NOT_FOUND)
-      );
+      throw new AppError({
+        httpCode: HttpCode.NOT_FOUND,
+        message: "No Voter With thaT Id found",
+      });
     }
     res.status(HttpCode.OK).json({
       status: "success",
