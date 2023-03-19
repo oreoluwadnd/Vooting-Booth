@@ -67,5 +67,9 @@ export const updateVoter = CatchAsync(
         message: "No Voter With that Id found",
       });
     }
+    res.status(HttpCode.OK).json({
+      status: "success",
+      data: voter,
+    });
   }
 );
