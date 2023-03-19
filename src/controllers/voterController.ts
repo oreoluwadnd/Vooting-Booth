@@ -17,3 +17,21 @@ export const getAllVoters = CatchAsync(
     });
   }
 );
+
+//GET VOTER BY ID
+export const getVoter = CatchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const voter = await Voter.findById(req.params.id);
+    if (!voter) {
+      return next(
+        new AppError("No voter found with that ID", HttpCode.NOT_FOUND)
+      );
+    }
+    res.status(HttpCode.OK).json({
+      status: "success",
+      data: {
+        voter,
+      },
+    });
+  }
+);
